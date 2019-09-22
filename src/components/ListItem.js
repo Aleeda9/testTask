@@ -1,5 +1,9 @@
 import React from 'react';
 
+/**
+ * ListItem Component
+ * renders single list item with its name and summary
+ */
 export default class ListItem extends React.Component {
     render() {
         return <div>
