@@ -17,7 +17,6 @@ function getRepos(data) {
 }
 
 export function fetchRepos() {
-    console.log('fetchRepos');
     let now = new Date();
 
     // today date
