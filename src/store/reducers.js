@@ -1,15 +1,15 @@
 import { actionTypes } from './actions';
 
-const initialState = {repos: [], query: '', filter: 'all'};
+const initialState = {repos: [], query: '', filter: 'all', total: 0};
 
 export function reposApp(state = initialState, action) {
-    let { repos, query, filter} = state;
+    let { repos, query, filter, ...rest} = state;
 
     switch(action.type) {
         // form repos array
         case actionTypes.GET_REPOS:
             return {
-                repos:  action.data.map(repo => ({
+                repos:  action.data.repos.map(repo => ({
                         id: repo.id,
                         name: repo.name,
                         summary: {
@@ -20,7 +20,9 @@ export function reposApp(state = initialState, action) {
                     }
                 )),
                 query,
-                filter
+                filter,
+                // because only 1000 can be got from github api
+                total: action.data.total > 1000 ? 1000 : action.data.total
             };
 
         // change search query
@@ -28,7 +30,8 @@ export function reposApp(state = initialState, action) {
             return {
                 query: action.query,
                 repos,
-                filter
+                filter,
+                ...rest
             }
 
         // change license filter
@@ -36,7 +39,8 @@ export function reposApp(state = initialState, action) {
             return {
                 filter: action.filter,
                 repos,
-                query
+                query,
+                ...rest
             }
 
         default:

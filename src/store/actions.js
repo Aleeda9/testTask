@@ -17,7 +17,7 @@ function getRepos(data) {
     }
 }
 
-export function fetchRepos() {
+export function fetchRepos(page) {
     let now = new Date();
 
     // today date
@@ -31,10 +31,10 @@ export function fetchRepos() {
 
     let date = [now.getFullYear(), ('0' + now.getMonth()).slice(-2), day].join('-');
 
-    return dispatch => fetch(`https://api.github.com/search/repositories?q=language:javascript+created:>${date}&sort=stars&order=desc`, { method: 'GET' })
+    return dispatch => fetch(`https://api.github.com/search/repositories?q=language:javascript+created:>${date}&sort=stars&order=desc&page=${page}&per_page=50`, { method: 'GET' })
         .then(response => response.json(),
               error => console.log(`Error occured: ` + error))
-        .then(data => dispatch(getRepos(data.items ? data.items : [])))
+        .then(data => dispatch(getRepos({ repos: data.items ? data.items : [], total: data.total_count })))
 }
 
 export function searchRepos(query) {

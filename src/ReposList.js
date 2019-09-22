@@ -9,7 +9,7 @@ import { fetchRepos } from './store/actions';
  */
 class ReposList extends React.Component {
     componentDidMount() {
-        this.props.fetchRepos();
+        this.props.fetchRepos(1);
     }
     render() {
         return <List items={ this.props.repos }/>
@@ -25,5 +25,5 @@ export default connect(
         else // filter by search query and by selected license
             return { repos: repos.filter(repo => (repo.name.indexOf(query) === 0) && (repo.summary.license == filter) ) }
     },
-    dispatch => ({ fetchRepos: () => dispatch(fetchRepos()) })
+    dispatch => ({ fetchRepos: (page) => dispatch(fetchRepos(page)) })
 )(ReposList);
