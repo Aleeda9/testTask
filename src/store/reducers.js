@@ -1,28 +1,46 @@
 import { actionTypes } from './actions';
 
-const initialState = {repos: []}
+const initialState = {repos: [], query: '', filter: 'all'};
 
 export function reposApp(state = initialState, action) {
+    let { repos, query, filter} = state;
+
     switch(action.type) {
+        // form repos array
         case actionTypes.GET_REPOS:
-            initialState.repos = action.data.map(repo => ({
-                    id: repo.id,
-                    name: repo.name,
-                    summary: {
-                        author: repo.owner.login,
-                        license: repo.license ? repo.license.name : null,
-                        stars: repo.stargazers_count
-                    } 
-                }))
-            return Object.assign({}, { repos: initialState.repos });
+            return {
+                repos:  action.data.map(repo => ({
+                        id: repo.id,
+                        name: repo.name,
+                        summary: {
+                            author: repo.owner.login,
+                            license: repo.license ? repo.license.name : null,
+                            stars: repo.stargazers_count
+                        } 
+                    }
+                )),
+                query,
+                filter
+            };
 
-            case actionTypes.SEARCH_REPOS:
-                return {
-                    repos: !action.query ? initialState.repos : initialState.repos.filter(repo => repo.name.indexOf(action.query) === 0)
-                };
+        // change search query
+        case actionTypes.SEARCH_REPOS:
+            return {
+                query: action.query,
+                repos,
+                filter
+            }
 
-            default:
-                return state;
+        // change license filter
+        case actionTypes.FILTER_REPOS:
+            return {
+                filter: action.filter,
+                repos,
+                query
+            }
+
+        default:
+            return state;
     }
 
 }

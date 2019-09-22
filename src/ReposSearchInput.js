@@ -3,6 +3,10 @@ import { connect } from 'react-redux';
 
 import { searchRepos } from './store/actions';
 
+/**
+ * Search input for searching by repos name
+ * searching in real time
+ */
 class ReposSearchInput extends React.Component {
     onKeyUp(value) {
         this.props.searchRepos(value);

@@ -4,7 +4,8 @@ import fetch from 'cross-fetch';
 
 export const actionTypes = {
     GET_REPOS: 'GET_REPOS',
-    SEARCH_REPOS: 'SEARCH_REPOS'
+    SEARCH_REPOS: 'SEARCH_REPOS',
+    FILTER_REPOS: 'FILTER_REPOS'
 }
 
 // action creators
@@ -40,5 +41,12 @@ export function searchRepos(query) {
     return {
         type: actionTypes.SEARCH_REPOS,
         query
+    }
+}
+
+export function filterRepos(filter) {
+    return {
+        type: actionTypes.FILTER_REPOS,
+        filter
     }
 }
