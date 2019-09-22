@@ -12,6 +12,7 @@ export default class ListItem extends React.Component {
 function summary(props) {
     let summary = [];
     for(let i in props)
-        summary.push(<p key={ summary.length }> { i }: { props[i] } </p>);
+        if(props[i])
+            summary.push(<p key={ summary.length }> { i }: { props[i] } </p>);
     return <div style={{ paddingLeft: '3em' }}> { summary } </div>
 }

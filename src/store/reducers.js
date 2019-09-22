@@ -13,8 +13,8 @@ export function reposApp(state = initialState, action) {
                     name: repo.name,
                     summary: {
                         author: repo.owner.login,
-                        license: repo.license ? repo.license.name : ''
-                        //stars
+                        license: repo.license ? repo.license.name : null,
+                        stars: repo.stargazers_count
                     } 
                 }))
             };
